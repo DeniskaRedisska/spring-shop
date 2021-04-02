@@ -7,10 +7,7 @@ import com.example.springshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -56,6 +53,14 @@ public class MainController {
         product.setCurrency(Currency.getInstance("USD"));
         service.save(product);
         modelAndView.setViewName("redirect:/products");
+        return modelAndView;
+    }
+
+    @GetMapping("/products/{id}")
+    public ModelAndView getProduct(@PathVariable("id") Long id){
+        Product product = service.getProduct(id);
+        ModelAndView modelAndView=new ModelAndView("productDetails");
+        modelAndView.addObject("product",product);
         return modelAndView;
     }
 
